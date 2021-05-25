@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:movies/src/models/movie.model.dart';
+import 'package:movies/src/models/movie_model.dart';
 
 class MoviesProvider {
   String _apikey = 'c17dd352644a62b6500651f8540754e9';
