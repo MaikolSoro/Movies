@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:movies/src/models/movie_model.dart';
 
 class MoviesProvider {
-  String _apikey = 'c17dd352644a62b6500651f8540754e9';
+  String _apikey = '06cc0518bc28db53764e6062cf8eeddf';
   String _url = 'api.themoviedb.org';
   String _languaje = 'es-ES';
 
