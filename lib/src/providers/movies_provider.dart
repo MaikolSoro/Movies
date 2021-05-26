@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as https;
 import 'dart:convert';
 import 'package:movies/src/models/movie_model.dart';
 
@@ -24,7 +24,7 @@ class MoviesProvider {
   }
 
   Future<List<Movie>> _response(Uri url) async {
-    final response = await http.get(url);
+    final response = await https.get(url);
     final decodedData = json.decode(response.body);
 
     final movies = new Movies.fromJsonList(decodedData['results']);
