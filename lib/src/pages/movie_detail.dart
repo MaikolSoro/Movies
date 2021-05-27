@@ -7,24 +7,26 @@ class MovieDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Movie movie = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-        body: CustomScrollView(
-      slivers: <Widget>[
-        _createAppbar(movie),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            SizedBox(height: 10.0),
-            _posterTitle(context, movie),
-            _description(movie),
-            _description(movie),
-            _description(movie),
-            _description(movie),
-            _createCasting(movie),
-          ]),
+      return Scaffold(
+          body: CustomScrollView(
+        slivers: <Widget>[
+          _createAppbar(movie),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              SizedBox(height: 10.0),
+              _posterTitle(context, movie),
+              _description(movie),
+              _description(movie),
+              _description(movie),
+              _description(movie),
+              _createCasting(movie),
+            ]
+          ),
         )
       ],
-    ));
-  }
+    )
+  );
+}
 
   Widget _createAppbar(Movie movie) {
     return SliverAppBar(
@@ -118,7 +120,10 @@ class MovieDetail extends StatelessWidget {
       height: 200.0,
       child: PageView.builder(
         pageSnapping: false,
-        controller: PageController(viewportFraction: 0.3, initialPage: 1),
+        controller: PageController(
+          viewportFraction: 0.3, 
+          initialPage: 1
+          ),
         itemCount: actores.length,
         itemBuilder: (context, i) => _actorCard(actores[i]),
       ),

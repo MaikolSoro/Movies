@@ -59,7 +59,6 @@ class MoviesProvider {
     final url = Uri.https(_url, '3/movie/$moveID/credits', {
       'api_key': _apikey,
       'language': _languaje,
-      'page': _popPage.toString()
     });
     final resp = await https.get(url);
     final decodedData = json.decode(resp.body);
