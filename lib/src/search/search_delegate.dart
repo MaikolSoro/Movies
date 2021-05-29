@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movies/src/models/movie_model.dart';
+import 'package:movies/src/providers/movies_provider.dart';
 
 class DataSearch extends SearchDelegate {
   String selection = '';
+  final moviesProvider = new MoviesProvider();
+
   final movies = [
     'Spiderman',
     'Aquaman',
@@ -57,22 +61,37 @@ class DataSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     // Son las sugerencias que aparecen, cuando la persona escribe
 
-    final suggestedList = (query.isEmpty)
-        ? moviesRecent
-        : movies
-            .where((p) => p.toLowerCase().startsWith(query.toLowerCase()))
-            .toList();
-    return ListView.builder(
-      itemCount: suggestedList.length,
-      itemBuilder: (context, i) {
-        return ListTile(
-          leading: Icon(Icons.movie),
-          title: Text(suggestedList[i]),
-          onTap: () {
-            selection = suggestedList[i];
-            showResults(context);
-          },
-        );
+    if (query.isEmpty) {
+      return Container();
+    }
+    return FutureBuilder(
+      future: moviesProvider.searchMovie(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+        if (snapshot.hasData) {
+          final movies = snapshot.data;
+          return ListView(
+            children: movies.map((movie) {
+              return ListTile(
+                leading: FadeInImage(
+                    image: NetworkImage(movie.getPosterImg()),
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    width: 50.0,
+                    fit: BoxFit.contain),
+                title: Text(movie.title),
+                subtitle: Text(movie.originalTitle),
+                onTap: () {
+                  close(context, null);
+                  movie.uniqueId = '';
+                  Navigator.pushNamed(context, 'detail', arguments: movie);
+                },
+              );
+            }).toList(),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
